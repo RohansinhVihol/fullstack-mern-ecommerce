@@ -5,15 +5,18 @@ import Cart from './pages/Cart'
 import About from './pages/About'
 import Login from './pages/Login'
 import Product from './pages/Product'
+import Collection from './pages/Collection'
 import PlaceOrder from './pages/PlaceOrder'
 import Contact from './pages/Contact'
 import Orders from './pages/Orders'
+import Navbar from './components/Navbar'
 
 
 const App = () => {
   return (
     <>
   <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+    <Navbar/>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/collection' element = {<Collection/>}/>
