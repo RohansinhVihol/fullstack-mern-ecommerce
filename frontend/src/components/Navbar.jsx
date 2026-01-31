@@ -9,7 +9,7 @@ const Navbar = () => {
     <>
       <div className="mt-5 flex justify-between">
         <div>
-          <img className="w-35" src={assets.logo} alt="" />
+          <Link to='/'><img className="w-35" src={assets.logo} alt=""/></Link>
         </div>
         <div className="">
           <ul className="hidden sm:flex gap-9 font-medium cursor-pointer">
