@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, Link } from "react-router-dom";
+import { useShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
+  const {setShowSearch} = useShopContext();
 
   return (
     <>
@@ -44,7 +46,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="flex gap-5">
-          <img className="w-5 h-5 cursor-pointer" src={assets.search_icon} alt="" />
+          <img onClick={() => setShowSearch(true)} className="w-5 h-5 cursor-pointer" src={assets.search_icon} alt="" />
           <div className="relative group inline-block">
             <img
               className="w-5 h-5 cursor-pointer"

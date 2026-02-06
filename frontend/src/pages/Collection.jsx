@@ -5,12 +5,16 @@ import ProductItem from "../components/ProductItem";
 import Title from "../components/Title";
 
 const Collection = () => {
-  const { products } = useShopContext();
+  
   const [shopFilter, setShopFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relavent");
+
+  
+    const {products ,search , setSearch, showSearch, setShowSearch} = useShopContext();
+  
 
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
@@ -81,6 +85,10 @@ const Collection = () => {
 useEffect(() => {
   let temp = [...products];
 
+  if(showSearch && search){
+    temp = temp.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+  }
+
   if (category.length)
     temp = temp.filter(p => category.includes(p.category));
 
@@ -94,7 +102,7 @@ useEffect(() => {
     temp.sort((a, b) => b.price - a.price);
 
   setFilterProducts(temp);
-}, [category, subCategory, sortType, products]);
+}, [category, subCategory, sortType, products, search, showSearch]);
 
 
   return (
