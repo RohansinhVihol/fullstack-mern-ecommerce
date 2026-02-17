@@ -5,7 +5,7 @@ import { useShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const {setShowSearch} = useShopContext();
+  const {setShowSearch, getCartCount} = useShopContext();
 
   return (
     <>
@@ -88,7 +88,7 @@ const Navbar = () => {
                 className="absolute -bottom-1 -right-1 bg-red-500 text-white text-[10px] 
                    w-4 h-4 flex items-center justify-center rounded-full"
               >
-                1
+                {getCartCount()}
               </span>
             </Link>
           </div>
