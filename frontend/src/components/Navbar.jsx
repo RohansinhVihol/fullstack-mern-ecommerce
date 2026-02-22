@@ -48,11 +48,11 @@ const Navbar = () => {
         <div className="flex gap-5">
           <img onClick={() => setShowSearch(true)} className="w-5 h-5 cursor-pointer" src={assets.search_icon} alt="" />
           <div className="relative group inline-block">
-            <img
+            <Link to='/login'><img
               className="w-5 h-5 cursor-pointer"
               src={assets.profile_icon}
               alt="profile"
-            />
+            /></Link>
 
          
             <div
