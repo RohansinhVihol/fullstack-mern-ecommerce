@@ -5,7 +5,12 @@ import { useShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const {setShowSearch, getCartCount} = useShopContext();
+  const {setShowSearch, showSearch, getCartCount, navigate} = useShopContext();
+
+  const handleSearchNavigation = () => {
+    setShowSearch(!showSearch)
+    navigate('/collection')
+  }
 
   return (
     <>
@@ -46,7 +51,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="flex gap-5">
-          <img onClick={() => setShowSearch(true)} className="w-5 h-5 cursor-pointer" src={assets.search_icon} alt="" />
+          <img onClick={() => handleSearchNavigation() } className="w-5 h-5 cursor-pointer" src={assets.search_icon} alt="" />
           <div className="relative group inline-block">
             <Link to='/login'><img
               className="w-5 h-5 cursor-pointer"
