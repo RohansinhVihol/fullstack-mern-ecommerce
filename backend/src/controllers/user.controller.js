@@ -3,6 +3,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import validator from 'validator'
 import { User } from '../models/user.model.js'
+import jwt from 'jsonwebtoken'
 
 const generateUserToken = async function(userId){
    try {
@@ -110,9 +111,40 @@ const login = asyncHandler(async(req , res) => {
 
 })
 
-const adminLogin = asyncHandler((req , res) => {
+const adminLogin = asyncHandler(async (req, res) => {
 
-})
+    const { email, password } = req.body;
+
+    if (
+        email === process.env.ADMIN_EMAIL &&
+        password === process.env.ADMIN_PASSWORD
+    ) {
+
+        const token = jwt.sign(
+            { 
+              email,
+              role: "admin"
+            },
+            process.env.ADMIN_JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        return res
+            .status(200)
+            .cookie("adminToken", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict"
+            })
+            .json(
+                new ApiResponse(200, null, "Admin Login Successfully")
+            );
+
+    } else {
+        throw new ApiError(401, "Invalid Admin Credentials");
+    }
+
+});
 
 export{
     register,login,adminLogin
