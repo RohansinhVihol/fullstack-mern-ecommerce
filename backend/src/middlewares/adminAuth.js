@@ -5,6 +5,7 @@ import { ApiError } from '../utils/ApiError.js'
 const adminAuth = asyncHandler((req,res,next) => {
     try {
         const token = req.cookies.adminToken
+        //const {token} = req.header
     
         if(!token){
             throw new ApiError(401,"Admin Not Logged In")
