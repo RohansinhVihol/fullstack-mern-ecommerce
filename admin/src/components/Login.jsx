@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { backendUrl } from "../App";
+import { toast } from "react-toastify";
 
 const Login = ({setToken}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
 
   const onSubmitHandelr = async (e) => {
     try {
@@ -14,11 +17,18 @@ const Login = ({setToken}) => {
       })
       console.log(res.data.data)
       if(res.data.success){
-        setToken(res.data.token)
+        setToken(res.data.data)
+      }
+      else{
+        toast.error(res.data.message)
       }
       
     } catch (error) {
-      
+            toast.error(
+        error.response?.data?.message ||
+          error.message ||
+          "Something went wrong"
+      );
     }
   };
 

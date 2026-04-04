@@ -4,8 +4,8 @@ import { ApiError } from '../utils/ApiError.js'
 
 const adminAuth = asyncHandler((req,res,next) => {
     try {
-        const token = req.cookies.adminToken
-        //const {token} = req.header
+        //const token = req.cookies.adminToken
+        const token = req.headers.token
     
         if(!token){
             throw new ApiError(401,"Admin Not Logged In")
@@ -16,7 +16,11 @@ const adminAuth = asyncHandler((req,res,next) => {
         if(decodeData.role != 'admin'){
             throw new ApiError(403,"Access denied")
         }
-        req.admin = decodeData
+
+        // if(decodeData != process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD){
+        //     throw new ApiError(401, "Not Authorized Login Again")
+        // }
+
         next()
     } catch (error) {
         if (error instanceof ApiError) {
