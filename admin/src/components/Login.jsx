@@ -4,12 +4,12 @@ import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 
 const Login = ({setToken}) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@forever.com");
+  const [password, setPassword] = useState("qwerty123");
 
 
 
-  const onSubmitHandelr = async (e) => {
+  const onSubmitHandler = async (e) => {
     try {
       e.preventDefault();
       const res = await axios.post(backendUrl + '/api/v1/user/admin',{
@@ -36,7 +36,7 @@ const Login = ({setToken}) => {
     <div className="min-h-screen flex justify-center items-center  w-full">
       <div className="bg-white shadow-md rounded-lg px-8 py-6 max-w-md">
         <h1 className="text-2xl font-bold mb-4">Admin Panel</h1>
-        <form onSubmit={onSubmitHandelr}>
+        <form onSubmit={onSubmitHandler}>
           <div className="mb-3 min-w-72">
             <p className="text-sm font-medium text-gray-700 mb-2">
               Email Address

@@ -10,13 +10,43 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
 
+const getTokenWithExpiry = () => {
+  const itemStr = localStorage.getItem("token");
+
+  if (!itemStr) return "";
+
+  const item = JSON.parse(itemStr);
+  const now = new Date().getTime();
+
+  if (now > item.expiry) {
+    localStorage.removeItem("token");
+    return "";
+  }
+
+  return item.value;
+};
+
 const App = () => {
-  const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token"):"");
+  const [token, setToken] = useState(
+    localStorage.getItem("token") ? localStorage.getItem("token") : ""
+  );
 
-  useEffect(()=>{
-    localStorage.setItem("token",token)
-  },[token])
+  useEffect(() => {
 
+    if (token) {
+      localStorage.setItem("token", token);
+
+      const timer = setTimeout(() => {
+        localStorage.removeItem("token");
+        setToken("");
+      }, 3600000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+
+  }, [token]);
+
+ //expre ke bad bhi direct page open hota he 
   return (
     <div className="bg-gray-50 min-h-screen">
        <ToastContainer />
