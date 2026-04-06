@@ -9,22 +9,9 @@ import Login from "./components/Login";
 import { ToastContainer, toast } from 'react-toastify';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
+export const currency = '$'
 
-const getTokenWithExpiry = () => {
-  const itemStr = localStorage.getItem("token");
 
-  if (!itemStr) return "";
-
-  const item = JSON.parse(itemStr);
-  const now = new Date().getTime();
-
-  if (now > item.expiry) {
-    localStorage.removeItem("token");
-    return "";
-  }
-
-  return item.value;
-};
 
 const App = () => {
   const [token, setToken] = useState(
@@ -39,7 +26,7 @@ const App = () => {
       const timer = setTimeout(() => {
         localStorage.removeItem("token");
         setToken("");
-      }, 3600000); // 10 seconds
+      }, 3600000); 
 
       return () => clearTimeout(timer);
     }
