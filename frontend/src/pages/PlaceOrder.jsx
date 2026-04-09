@@ -58,7 +58,7 @@ const PlaceOrder = () => {
         }
       }
 
-      let orderData = {
+       let orderData = {
         address: formData,
         items: orderItems,
         amount: getCartAmount() + delivery_fee,

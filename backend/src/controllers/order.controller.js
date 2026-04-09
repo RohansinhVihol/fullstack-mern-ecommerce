@@ -69,15 +69,43 @@ const placeOrderRazorpay = asyncHandler(async (req, res) => {
 //All Orders data for Admin Panel
 const allOrders = asyncHandler(async (req, res) => {
 
+    const orders = await Order.find({})
+
+    res
+    .status(200)
+    .json(
+        new ApiResponse(200, orders, "All Orderes Fetched Successfully")
+    )
+
 })
 
 //User Order Data for Frontend
 const userOrders = asyncHandler(async (req, res) => {
 
+    const {userId} = req.body
+    
+    const orders = await Order.find({userId})
+
+    res
+    .status(200)
+    .json(
+        new ApiResponse(200,orders,"User Orders Fetched successfully")
+    )
+
 })
 
 //update order status for Admin Panel
 const updateStatus = asyncHandler(async (req, res) => {
+
+    const {orderId, status} = req.body
+
+    await Order.findByIdAndUpdate(orderId,{status})
+
+    res
+    .status(200)
+    .json(
+        new ApiResponse(200,{},"Status Updated")
+    )
 
 })
 
