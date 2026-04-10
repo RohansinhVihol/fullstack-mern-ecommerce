@@ -2,6 +2,14 @@ import { Order } from "../models/order.model.js"
 import { User } from "../models/user.model.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
+import Stripe from 'stripe'
+
+//Global Variables
+const currency = 'inr'
+const deliveryCharge = 10
+
+//gateway initialize
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 //Placing orders using COD Method
 const placeOrder = asyncHandler(async (req, res) => {
@@ -59,7 +67,78 @@ const placeOrder = asyncHandler(async (req, res) => {
 //Placing orders using Stripe Method
 const placeOrderStripe = asyncHandler(async (req, res) => {
 
+    const { userId, items, amount, address } = req.body;
+    const origin = req.headers.origin || "http://localhost:5173";
+
+    const orderData = {
+        userId,
+        items,
+        amount,
+        address,
+        paymentMethod: "Stripe",
+        payment: false,
+        date: Date.now()
+    };
+
+    const newOrder = await Order.create(orderData);
+
+    const line_items = items.map((item) => ({
+        price_data: {
+            currency: currency,
+            product_data: {
+                name: item.name
+            },
+            unit_amount: item.price * 100
+        },
+        quantity: item.quantity
+    }))
+
+    line_items.push({
+        price_data: {
+            currency: currency,
+            product_data: {
+                name: "Delivery Charges"
+            },
+            unit_amount: deliveryCharge * 100
+        },
+        quantity: 1
+    })
+
+    const session = await stripe.checkout.sessions.create({
+        success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
+        cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
+        line_items,
+        mode: 'payment',
+    })
+
+    res
+        .status(200)
+        .json(
+            new ApiResponse(200, session.url, "Stripe Payment")
+        )
+
 })
+
+//Verify Stripe
+const verifyStripe = async (req,res) => {
+
+    const {orderId, success, userId} = req.body
+
+    if(success == "true"){
+        await Order.findByIdAndUpdate(orderId,{payment:true})
+        await User.findByIdAndUpdate(userId,{cartData:{}}),
+        res
+        .status(200)
+        .json(
+            new ApiResponse(200,{},"Stripe Payment Successfully done")
+        )
+    }
+    else{
+        await Order.findByIdAndDelete(orderId)
+        throw new ApiError(400,"Payment failed")
+    }
+
+}
 
 //Placing orders using Razorpay Method
 const placeOrderRazorpay = asyncHandler(async (req, res) => {
@@ -72,48 +151,49 @@ const allOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({})
 
     res
-    .status(200)
-    .json(
-        new ApiResponse(200, orders, "All Orderes Fetched Successfully")
-    )
+        .status(200)
+        .json(
+            new ApiResponse(200, orders, "All Orderes Fetched Successfully")
+        )
 
 })
 
 //User Order Data for Frontend
 const userOrders = asyncHandler(async (req, res) => {
 
-    const {userId} = req.body
-    
-    const orders = await Order.find({userId})
+    const { userId } = req.body
+
+    const orders = await Order.find({ userId })
 
     res
-    .status(200)
-    .json(
-        new ApiResponse(200,orders,"User Orders Fetched successfully")
-    )
+        .status(200)
+        .json(
+            new ApiResponse(200, orders, "User Orders Fetched successfully")
+        )
 
 })
 
 //update order status for Admin Panel
 const updateStatus = asyncHandler(async (req, res) => {
 
-    const {orderId, status} = req.body
+    const { orderId, status } = req.body
 
-    await Order.findByIdAndUpdate(orderId,{status})
+    await Order.findByIdAndUpdate(orderId, { status })
 
     res
-    .status(200)
-    .json(
-        new ApiResponse(200,{},"Status Updated")
-    )
+        .status(200)
+        .json(
+            new ApiResponse(200, {}, "Status Updated")
+        )
 
 })
 
-export{
+export {
     placeOrder,
     placeOrderStripe,
     placeOrderRazorpay,
     allOrders,
     userOrders,
-    updateStatus
+    updateStatus,
+    verifyStripe
 }
