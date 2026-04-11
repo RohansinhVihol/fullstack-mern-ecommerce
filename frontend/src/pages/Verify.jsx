@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useShopContext } from "../context/ShopContext";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 
 const Verify = () => {
   const { navigate, token, setCartItems, backendUrl } = useShopContext();
@@ -14,7 +15,7 @@ const Verify = () => {
 
   const verifyPayment = async () => {
     try {
-      if (token) {
+      if (!token) {
         return null;
       }
 
@@ -23,7 +24,7 @@ const Verify = () => {
         { success, orderId },
         { headers: { token } },
       );
-      if (res.success) {
+      if (res.data.success) {
         setCartItems({});
         navigate("/orders");
       } else {

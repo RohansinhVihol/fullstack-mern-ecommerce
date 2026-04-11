@@ -6,7 +6,7 @@ import Stripe from 'stripe'
 import razorpay from 'razorpay'
 
 //Global Variables
-const currency = 'inr'
+const currency = 'usd'
 const deliveryCharge = 10
 
 //gateway initialize
@@ -132,7 +132,7 @@ const verifyStripe = async (req, res) => {
 
     if (success == "true") {
         await Order.findByIdAndUpdate(orderId, { payment: true })
-        await User.findByIdAndUpdate(userId, { cartData: {} }),
+        await User.findByIdAndUpdate(userId, { cartData: {} })
             res
                 .status(200)
                 .json(
