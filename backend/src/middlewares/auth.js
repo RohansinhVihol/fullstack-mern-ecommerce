@@ -19,7 +19,7 @@ const authUser = asyncHandler(async (req, res, next) => {
         if (error instanceof ApiError) {
             throw error;
         }
-        throw new ApiError(401, "Invalid or Expired Token");
+        throw new ApiError(401, "Invalid or Expired Token Please login again");
 
     }
 })

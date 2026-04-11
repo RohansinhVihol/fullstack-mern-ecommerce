@@ -54,15 +54,9 @@ const register = asyncHandler(async (req , res) => {
     const token = await generateUserToken(user._id)
     const createdUser = await User.findById(user._id).select("-password")
 
-    const option = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
-    }
 
     res
     .status(201)
-    .cookie("token",token,option)
     .json(
         new ApiResponse(201,token,"User Registered Successfully")
     )
@@ -96,14 +90,8 @@ const login = asyncHandler(async(req , res) => {
     const safeUser = user.toObject()
     delete safeUser.password
 
-    const option = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
-    }
-
     res.status(200)
-    .cookie("token",token,option)
+    
     .json(
         new ApiResponse(200,token,"User successfully login")
     )
@@ -131,11 +119,6 @@ const adminLogin = asyncHandler(async (req, res) => {
 
         return res
             .status(200)
-            .cookie("adminToken", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict"
-            })
             .json(
                 new ApiResponse(200, token, "Admin Login Successfully")
             );
