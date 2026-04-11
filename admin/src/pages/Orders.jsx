@@ -21,7 +21,7 @@ const Orders = ({ token }) => {
         { headers: { token } },
       );
       if (res.data.success) {
-        setOrders(res.data.data);
+        setOrders(res.data.data.reverse());
       } else {
         toast.error(res.data.message);
       }
@@ -109,7 +109,7 @@ const Orders = ({ token }) => {
                 Item : {order.items.length}
               </p>
               <p className="mt-3">Method : {order.paymentMethod}</p>
-              <p>Payment : {order.payment ? "Done" : "Payment"}</p>
+              <p>Payment : {order.payment ? "Done" : "Pending"}</p>
               <p>Date : {new Date(order.date).toLocaleDateString()}</p>
             </div>
             <p className="text-sm sm:text-[15px]">

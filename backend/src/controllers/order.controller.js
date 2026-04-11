@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import Stripe from 'stripe'
+import razorpay from 'razorpay'
 
 //Global Variables
 const currency = 'inr'
@@ -10,6 +11,11 @@ const deliveryCharge = 10
 
 //gateway initialize
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+const razorpayInstance = new razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+})
 
 //Placing orders using COD Method
 const placeOrder = asyncHandler(async (req, res) => {
@@ -120,22 +126,22 @@ const placeOrderStripe = asyncHandler(async (req, res) => {
 })
 
 //Verify Stripe
-const verifyStripe = async (req,res) => {
+const verifyStripe = async (req, res) => {
 
-    const {orderId, success, userId} = req.body
+    const { orderId, success, userId } = req.body
 
-    if(success == "true"){
-        await Order.findByIdAndUpdate(orderId,{payment:true})
-        await User.findByIdAndUpdate(userId,{cartData:{}}),
-        res
-        .status(200)
-        .json(
-            new ApiResponse(200,{},"Stripe Payment Successfully done")
-        )
+    if (success == "true") {
+        await Order.findByIdAndUpdate(orderId, { payment: true })
+        await User.findByIdAndUpdate(userId, { cartData: {} }),
+            res
+                .status(200)
+                .json(
+                    new ApiResponse(200, {}, "Stripe Payment Successfully done")
+                )
     }
-    else{
+    else {
         await Order.findByIdAndDelete(orderId)
-        throw new ApiError(400,"Payment failed")
+        throw new ApiError(400, "Payment failed")
     }
 
 }
@@ -143,6 +149,60 @@ const verifyStripe = async (req,res) => {
 //Placing orders using Razorpay Method
 const placeOrderRazorpay = asyncHandler(async (req, res) => {
 
+    const { userId, items, amount, address } = req.body;
+
+    const orderData = {
+        userId,
+        items,
+        amount,
+        address,
+        paymentMethod: "Razorpay",
+        payment: false,
+        date: Date.now()
+    };
+
+    const newOrder = await Order.create(orderData);
+
+    const options = {
+        amount: amount * 100,
+        currency: currency.toUpperCase(),
+        receipt: newOrder._id.toString(),
+    }
+
+    await razorpayInstance.orders.create(options, (error, order) => {
+        if (error) {
+            console.log(error);
+            throw new ApiError(500, "payment failed")
+        }
+        res
+            .status(200)
+            .json(
+                new ApiResponse(200, order, "Payment Successfully done")
+            )
+    })
+
+})
+
+const verifyRazorpay = asyncHandler(async (req, res) => {
+    const { userId, razorpay_order_id } = req.body
+    
+
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
+
+    if(orderInfo.status == 'paid'){
+        await Order.findByIdAndUpdate(orderInfo.receipt,{payment:true})
+        await User.findByIdAndUpdate(userId,{cartData:{}})
+
+        res
+        .status(200)
+        .json(
+            new ApiResponse(200,{},"Payment Successfully")
+        )
+    }
+    else{
+        throw new ApiResponse(500,"Payment Failed")
+    }
+    
 })
 
 //All Orders data for Admin Panel
@@ -195,5 +255,6 @@ export {
     allOrders,
     userOrders,
     updateStatus,
-    verifyStripe
+    verifyStripe,
+    verifyRazorpay
 }
