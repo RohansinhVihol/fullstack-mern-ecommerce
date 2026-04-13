@@ -7,7 +7,7 @@ const authUser = asyncHandler(async (req, res, next) => {
     const { token } = req.headers
 
     if (!token) {
-        throw new ApiError(401, "User Not Logged In")
+        throw new ApiError(401, "First You Have To Login")
     }
 
     try {

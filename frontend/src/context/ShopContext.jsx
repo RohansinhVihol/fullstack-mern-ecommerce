@@ -131,8 +131,8 @@ const ShopContextProvider = (props) => {
         { headers: { token } },
       );
 
-      if(res.data.success){
-        setCartItems(res.data.data)
+      if (res.data.success) {
+        setCartItems(res.data.data);
       }
     } catch (error) {
       toast.error(
@@ -147,12 +147,55 @@ const ShopContextProvider = (props) => {
     getProductsData();
   }, []);
 
+  // useEffect(() => {
+  //   if (!token && localStorage.getItem("token")) {
+  //     setToken(localStorage.getItem("token"));
+  //     getUserCart(localStorage.getItem("token"))
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (!token && localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-      getUserCart(localStorage.getItem("token"))
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) {
+      setToken(storedToken);
+      getUserCart(storedToken);
     }
   }, []);
+
+  useEffect(() => {
+    if (!token) return;
+
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
+      const expiryTime = payload.exp * 1000 - Date.now();
+
+
+      if (expiryTime <= 0) {
+        logoutUser();
+      } else {
+        const timer = setTimeout(() => {
+          logoutUser();
+        }, expiryTime);
+
+        return () => clearTimeout(timer);
+      }
+    } catch (error) {
+      logoutUser();
+    }
+
+    function logoutUser() {
+      toast.info(
+        "For security reasons, your session expired. Please login again.",
+      );
+
+      localStorage.removeItem("token");
+      setToken("");
+      setCartItems({});
+      navigate("/login");
+    }
+  }, [token]);
 
   const value = {
     products,
