@@ -107,32 +107,32 @@ Base URL:
 
 ### User Routes
 
-POST /api/v1/user/register
-POST /api/v1/user/login
+POST /api/v1/user/register\
+POST /api/v1/user/login\
 POST /api/v1/user/admin
 
 ### Product Routes
 
-POST /api/v1/product/add
-POST /api/v1/product/remove
-POST /api/v1/product/single
+POST /api/v1/product/add\
+POST /api/v1/product/remove\
+POST /api/v1/product/single\
 GET /api/v1/product/list
 
 ### Cart Routes
 
-POST /api/v1/cart/get
-POST /api/v1/cart/add
+POST /api/v1/cart/get\
+POST /api/v1/cart/add\
 POST /api/v1/cart/update
 
 ### Order Routes (Admin)
 
-POST /api/v1/order/list
+POST /api/v1/order/list\
 POST /api/v1/order/status
 
 ### Payment Routes
 
-POST /api/v1/order/place
-POST /api/v1/order/stripe
+POST /api/v1/order/place\
+POST /api/v1/order/stripe\
 POST /api/v1/order/razorpay
 
 ### User Orders
@@ -141,7 +141,7 @@ POST /api/v1/order/userorders
 
 ### Payment Verification
 
-POST /api/v1/order/verifyStripe
+POST /api/v1/order/verifyStripe\
 POST /api/v1/order/verifyRazorpay
 
 ------------------------------------------------------------------------
