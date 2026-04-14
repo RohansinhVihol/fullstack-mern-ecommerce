@@ -105,43 +105,43 @@ Base URL:
 
 /api/v1
 
-User Routes:
+### User Routes
 
-POST /api/v1/user/register\
-POST /api/v1/user/login\
+POST /api/v1/user/register
+POST /api/v1/user/login
 POST /api/v1/user/admin
 
-Product Routes:
+### Product Routes
 
-POST /api/v1/product/add\
-POST /api/v1/product/remove\
-POST /api/v1/product/single\
+POST /api/v1/product/add
+POST /api/v1/product/remove
+POST /api/v1/product/single
 GET /api/v1/product/list
 
-Cart Routes:
+### Cart Routes
 
-POST /api/v1/cart/get\
-POST /api/v1/cart/add\
+POST /api/v1/cart/get
+POST /api/v1/cart/add
 POST /api/v1/cart/update
 
-Order Routes (Admin):
+### Order Routes (Admin)
 
-POST /api/v1/order/list\
+POST /api/v1/order/list
 POST /api/v1/order/status
 
-Order Routes (Payments):
+### Payment Routes
 
-POST /api/v1/order/place\
-POST /api/v1/order/stripe\
+POST /api/v1/order/place
+POST /api/v1/order/stripe
 POST /api/v1/order/razorpay
 
-User Orders:
+### User Orders
 
 POST /api/v1/order/userorders
 
-Payment Verification:
+### Payment Verification
 
-POST /api/v1/order/verifyStripe\
+POST /api/v1/order/verifyStripe
 POST /api/v1/order/verifyRazorpay
 
 ------------------------------------------------------------------------
@@ -156,6 +156,20 @@ POST /api/v1/order/verifyRazorpay
 -   Image Upload Protection using Multer
 
 ------------------------------------------------------------------------
+
+## ▶️ Run Project Locally
+
+### Backend
+
+cd server\
+npm install\
+npm run dev
+
+### Frontend
+
+cd client
+npm install
+npm run dev
 
 ## 💳 Payment Methods Supported
 
