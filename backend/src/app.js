@@ -15,6 +15,10 @@ app.use(express.urlencoded({
 }))
 app.use(cookieParser())
 
+app.get("/", (req, res) => {
+  res.send("Forever eCommerce API is running...");
+});
+
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/product', productRoutes)
 app.use('/api/v1/cart', cartRoutes)

@@ -7,11 +7,27 @@ Delivery.
 
 ------------------------------------------------------------------------
 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
+![Razorpay](https://img.shields.io/badge/Razorpay-0C2451?style=for-the-badge&logo=razorpay&logoColor=white)
+
+Production-ready MERN eCommerce platform featuring JWT authentication, role-based admin dashboard, product management system, and Stripe + Razorpay payment gateway integration deployed on Vercel serverless infrastructure.
+
+------------------------------------------------------------------------
+
 ## 🌐 Live Project Links
 
-Frontend: https://forever-frontend-two-azure.vercel.app
+🚀 Frontend (User Panel)  
+https://forever-frontend-two-azure.vercel.app
 
-Admin Panel: https://forever-admin-tau-mauve.vercel.app
+🛠 Admin Dashboard  
+https://forever-admin-tau-mauve.vercel.app
+
+⚙️ Backend REST API  
+https://forever-backend-psi-nine.vercel.app
 
 ------------------------------------------------------------------------
 
@@ -59,6 +75,14 @@ Admin can:
 -   View All Orders
 -   Update Order Status
 
+### 🔐 Security Features
+
+- JWT authentication
+- Role-based admin authorization
+- Protected API routes
+- Secure image upload validation
+- Payment verification middleware
+
 ------------------------------------------------------------------------
 
 ## 🧑‍💻 Tech Stack
@@ -95,7 +119,29 @@ Deployment:
 
 ## 📁 Folder Structure
 
-Forever-Ecommerce │ ├── frontend ├── admin └── backend
+```
+Forever-Ecommerce/
+│
+├── frontend/
+├── admin/
+└── backend/
+```
+
+## 🧱 Application Architecture
+
+Client (Frontend / Admin)
+        ↓
+REST API (Express Serverless Backend)
+        ↓
+Authentication Middleware (JWT)
+        ↓
+Controllers
+        ↓
+MongoDB Database
+        ↓
+Cloudinary (Image Storage)
+        ↓
+Stripe / Razorpay (Payments)
 
 ------------------------------------------------------------------------
 
@@ -104,6 +150,11 @@ Forever-Ecommerce │ ├── frontend ├── admin └── backend
 Base URL:
 
 /api/v1
+
+### Backend root endpoint:
+
+GET /
+Returns: "Forever eCommerce API is running..."
 
 ### User Routes
 
@@ -157,19 +208,64 @@ POST /api/v1/order/verifyRazorpay
 
 ------------------------------------------------------------------------
 
+## 🔐 Environment Variables
+
+### 🖥 Server Configuration
+
+PORT=****
+MONGODB_URI=****
+JWT_TOKEN_SECRET=****
+JWT_TOKEN_EXPIRE=****
+
+### ☁️ Cloudinary Configuration
+
+CLOUDINARY_API_KEY=****
+CLOUDINARY_SECRET_KEY=****
+CLOUDINARY_NAME=****
+
+### 👨‍💼 Admin Authentication
+
+ADMIN_EMAIL=****
+ADMIN_PASSWORD=****
+ADMIN_JWT_SECRET=****
+
+### 💳 Payment Gateway Configuration
+
+STRIPE_SECRET_KEY=****
+RAZORPAY_KEY_ID=****
+RAZORPAY_KEY_SECRET=****
+
+------------------------------------------------------------------------
 ## ▶️ Run Project Locally
+
+### Clone Repository
+
+git clone https://github.com/RohansinhVihol/fullstack-mern-ecommerce
+cd fullstack-mern-ecommerce
 
 ### Backend
 
-cd server\
-npm install\
+```bash
+cd backend
+npm install
 npm run dev
+```
 
-### Frontend
+### Frontend (User Panel)
 
-cd client\
-npm install\
+```bash
+cd frontend
+npm install
 npm run dev
+```
+
+### Admin Panel
+
+```bash
+cd admin
+npm install
+npm run dev
+```
 
 ## 💳 Payment Methods Supported
 
@@ -179,13 +275,36 @@ Cash on Delivery (COD)
 
 ------------------------------------------------------------------------
 
+## 📈 Project Highlights
+
+✔ Full-stack MERN eCommerce platform  
+✔ Role-based Admin Dashboard  
+✔ Stripe + Razorpay payment gateway integration  
+✔ JWT-based authentication & authorization  
+✔ Secure image upload using Cloudinary + Multer  
+✔ Serverless backend deployment on Vercel
+
+## 🏗 Architecture Highlights
+
+- RESTful API architecture with versioning (/api/v1)
+- MVC-based backend structure
+- Middleware-based authentication & authorization
+- MongoDB schema-based data modeling using Mongoose
+- Cloudinary integration for image storage
+- Payment verification workflow for Stripe & Razorpay
+- Separate frontend and admin panel applications
+
+------------------------------------------------------------------------
+
 ## 🌍 Deployment
 
-Project deployed using Vercel
+Project deployed on **Vercel Serverless Infrastructure**
 
 Frontend: https://forever-frontend-two-azure.vercel.app
 
 Admin Panel: https://forever-admin-tau-mauve.vercel.app
+
+Backend API: https://forever-backend-psi-nine.vercel.app
 
 ------------------------------------------------------------------------
 
@@ -202,7 +321,10 @@ Admin Panel: https://forever-admin-tau-mauve.vercel.app
 
 ## 👨‍💻 Author
 
-Rohansinh Vihol
+**Rohansinh Vihol**
 
-Full‑Stack Developer\
-BCA Student \| Future Software Engineer 🚀
+Full-Stack Developer  
+BCA Student | Future Software Engineer 🚀
+
+🔗 GitHub: https://github.com/RohansinhVihol  
+🔗 LinkedIn: www.linkedin.com/in/rohansinhvihol
