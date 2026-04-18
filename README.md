@@ -129,18 +129,18 @@ Forever-Ecommerce/
 
 ## 🧱 Application Architecture
 
-Client (Frontend / Admin)
-        ↓
-REST API (Express Serverless Backend)
-        ↓
-Authentication Middleware (JWT)
-        ↓
-Controllers
-        ↓
-MongoDB Database
-        ↓
-Cloudinary (Image Storage)
-        ↓
+Client (Frontend / Admin)\
+        ↓\
+REST API (Express Serverless Backend)\
+        ↓\
+Authentication Middleware (JWT)\
+        ↓\
+Controllers\
+        ↓\
+MongoDB Database\
+        ↓\
+Cloudinary (Image Storage)\
+        ↓\
 Stripe / Razorpay (Payments)
 
 ------------------------------------------------------------------------
@@ -212,27 +212,27 @@ POST /api/v1/order/verifyRazorpay
 
 ### 🖥 Server Configuration
 
-PORT=****
-MONGODB_URI=****
-JWT_TOKEN_SECRET=****
+PORT=****\
+MONGODB_URI=****\
+JWT_TOKEN_SECRET=****\
 JWT_TOKEN_EXPIRE=****
 
 ### ☁️ Cloudinary Configuration
 
-CLOUDINARY_API_KEY=****
-CLOUDINARY_SECRET_KEY=****
+CLOUDINARY_API_KEY=****\
+CLOUDINARY_SECRET_KEY=****\
 CLOUDINARY_NAME=****
 
 ### 👨‍💼 Admin Authentication
 
-ADMIN_EMAIL=****
-ADMIN_PASSWORD=****
+ADMIN_EMAIL=****\
+ADMIN_PASSWORD=****\
 ADMIN_JWT_SECRET=****
 
 ### 💳 Payment Gateway Configuration
 
-STRIPE_SECRET_KEY=****
-RAZORPAY_KEY_ID=****
+STRIPE_SECRET_KEY=****\
+RAZORPAY_KEY_ID=****\
 RAZORPAY_KEY_SECRET=****
 
 ------------------------------------------------------------------------
@@ -240,7 +240,7 @@ RAZORPAY_KEY_SECRET=****
 
 ### Clone Repository
 
-git clone https://github.com/RohansinhVihol/fullstack-mern-ecommerce
+git clone https://github.com/RohansinhVihol/fullstack-mern-ecommerce\
 cd fullstack-mern-ecommerce
 
 ### Backend
